@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const comprovantePagamento = document.getElementById('comprovantePagamento');
     const whatsappButton = document.getElementById('whatsappButton');
     const finalizarCompraButton = document.getElementById('finalizarCompraButton');
-    const pixKeyElement = document.querySelector('.activate-button'); // Correção aqui
 
     let selectedNumbers = [];
     let formaPagamento;
@@ -29,23 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectNumber(numberDiv) {
-        if (!numberDiv.classList.contains('indisponivel')) {
-            if (!numberDiv.classList.contains('selecionado')) {
-                numberDiv.classList.add('selecionado');
-                selectedNumbers.push(numberDiv.dataset.number);
-            } else {
-                numberDiv.classList.remove('selecionado');
-                selectedNumbers = selectedNumbers.filter(num => num !== numberDiv.dataset.number);
-            }
-            updateSelectedNumbersText();
-        } else {
-            limparModal();
-            selectedNumbers.push(numberDiv.dataset.number);
-            updateSelectedNumbersText();
-            modal.style.display = 'block';
+        if (numberDiv.classList.contains('indisponivel')) {
+            alert('Este número está indisponível.');
+            return;
         }
-        console.log('Selected number:', numberDiv.dataset.number); // Verificar o número selecionado
-        console.log('Selected numbers array:', selectedNumbers); // Verificar o array de números selecionados
+
+        if (!numberDiv.classList.contains('selecionado')) {
+            numberDiv.classList.add('selecionado');
+            selectedNumbers.push(numberDiv.dataset.number);
+        } else {
+            numberDiv.classList.remove('selecionado');
+            selectedNumbers = selectedNumbers.filter(num => num !== numberDiv.dataset.number);
+        }
+        updateSelectedNumbersText();
+        console.log('Selected number:', numberDiv.dataset.number);
+        console.log('Selected numbers array:', selectedNumbers);
     }
 
     function updateSelectedNumbersText() {
@@ -59,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pixButton.addEventListener('click', () => {
         formaPagamento = 'Pix';
-        console.log('Pix button clicked'); // Log para verificar o clique no botão
-        generateQRCode();
+        console.log('Pix button clicked');
+        qrContainer.style.display = 'none';
         mostrarComprovante();
         salvarSelecao();
     });
@@ -81,46 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         salvarSelecao();
     });
 
-    function generateQRCode() {
-        qrContainer.innerHTML = ''; // Limpar QR Code anterior
-        console.log('Generating QR Code'); // Log para verificar se a função está sendo chamada
-        const qr = new QRious({
-            element: qrContainer, // Elemento onde o QR Code será renderizado
-            value: `00020126360014BR.GOV.BCB.PIX0114SUA_CHAVE_PIX520400005303986540315.005802BR5916Nayara Felicia de Oliveira Freitas6009Sao Paulo62070503***6304${selectedNumbers.join(',')}`
-        });
-        qrContainer.style.display = 'block'; // Certifique-se de que o container está sendo exibido
-        console.log('QR Code generated'); // Log para verificar se o QR Code foi gerado
-    }
-
-    function generateQRCodeFromPixKey() {
-        const qrContainer = document.getElementById('qrcode'); // Garantir que o elemento exista
-        if (!qrContainer) {
-            console.error('O elemento #qrcode não foi encontrado');
-            return;
-        }
-        const pixKey = '00020126360014BR.GOV.BCB.PIX01149314598895204000053039865802BR5916Nayara Felicia de Oliveira Freitas6009Sao Paulo62070503***6304A13F';
-        qrContainer.innerHTML = ''; // Limpar QR Code anterior
-        console.log('Generating QR Code from Pix Key'); // Log para verificar se a função está sendo chamada
-        const qr = new QRious({
-            element: qrContainer,
-            value: pixKey
-        });
-        qrContainer.style.display = 'block'; // Certifique-se de que o container está sendo exibido
-        console.log('QR Code generated from Pix Key'); // Log para verificar se o QR Code foi gerado
-    }
-
-    pixKeyElement.addEventListener('click', () => {
-        generateQRCodeFromPixKey();
-    });
-
     function mostrarComprovante() {
         if (nomeInput.value) {
             comprovanteNome.textContent = `Nome: ${nomeInput.value}`;
             comprovanteNumeros.textContent = `Números: ${selectedNumbers.join(', ')}`;
             comprovantePagamento.textContent = `Forma de Pagamento: ${formaPagamento}`;
             comprovanteDiv.style.display = 'block';
+            console.log('Comprovante gerado com sucesso');
+        } else {
+            alert('Por favor, preencha o nome.');
         }
-        console.log('Comprovante - selectedNumbers:', selectedNumbers); // Verificar array no comprovante
     }
 
     function salvarSelecao() {
@@ -129,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedDiv.classList.add('indisponivel');
             selectedDiv.classList.remove('selecionado');
         });
-        updateSelectedNumbersText(); // Mover atualização aqui
+        updateSelectedNumbersText();
     }
 
     function limparModal() {
@@ -152,10 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     whatsappButton.addEventListener('click', () => {
-        const numeros = comprovanteNumeros.textContent.split('Números: ')[1];
+        const numeros = selectedNumbers.join(', ');
         const nome = nomeInput.value;
         const pagamento = formaPagamento;
-        const mensagem = `Comprovante:\nNome: ${nome}\nNúmeros: ${numeros}\nForma de Pagamento: ${pagamento}`;
+        const mensagem = `Obrigado por participar da nossa rifa solidária!:\nNome:${nome}\nNúmeros:${numeros}\nForma de Pagamento:${pagamento}\nBoa sorte!🍀 Agradecemos o seu apoio!`;
         const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`;
         window.open(url, '_blank');
     });
