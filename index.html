@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rifa Beneficente</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
-
 <body>
     <div class="container">
         <div class="header">
@@ -34,11 +33,32 @@
         <div class="numbers" id="numberContainer">
             <!-- Números serão gerados dinamicamente aqui -->
         </div>
+        <button id="finalizarCompraButton" style="display: none;">Finalizar Compra</button> <!-- Botão adicionado -->
+        <div id="comprovanteModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Comprovante</h2>
+                <p id="selectedNumbers"></p>
+                <input type="text" id="nomeInput" placeholder="Nome de quem escolheu">
+                <div id="paymentOptions">
+                    <button id="pixButton">Pagar com Pix</button>
+                    <button id="dinheiroButton">Pagar com Dinheiro</button>
+                    <button id="pagarDepoisButton">Pagar Depois</button>
+                </div>
+                <div id="comprovante" style="display: none;">
+                    <h3>Comprovante</h3>
+                    <p id="comprovanteNome"></p>
+                    <p id="comprovanteNumeros"></p>
+                    <p id="comprovantePagamento"></p>
+                    <button id="whatsappButton">Enviar Comprovante via WhatsApp</button>
+                </div>
+                <div id="qrcode" style="display: none;"></div>
+            </div>
+        </div>
         <p class="text-description">Olá! Sou Felipe Gabriel, tenho 9 anos e nasci prematuro, com apenas 5 meses de gestação. Por conta disso, enfrentei algumas sequelas e desde os 3 meses de vida uso traqueostomia, após um longo período de intubação. Atualmente, preciso realizar uma cirurgia para reconstruir minha traqueia e, por isso, estou pedindo a sua ajuda de coração. Conto com você! 🙏🏼</p>
         <p class="activate-button">Chave Pix: (11) 931459889</p>
         <p>Nayara Felicia de Oliveira Freitas</p>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
