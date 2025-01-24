@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const numberContainer = document.getElementById('numberContainer');
     for (let i = 1; i <= 50; i++) {
         const numberDiv = document.createElement('div');

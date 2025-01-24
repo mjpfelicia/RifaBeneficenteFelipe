@@ -33,7 +33,6 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-   
     padding: 0.75rem 1rem;
 }
 
@@ -57,7 +56,7 @@ body {
 
 .text-description {
     color: rgb(98, 102, 107) !important;
-    font-size: 1.rem !important;
+    font-size: 1rem !important;
 }
 
 .premio {
@@ -76,6 +75,7 @@ body {
     align-items: center;
     gap: 1rem;
     margin: 1rem 0;
+    flex-wrap: wrap;
 }
 
 .premio span {
@@ -136,4 +136,91 @@ body {
     justify-content: center;
     align-items: center;
     margin: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .custom-button h2 {
+        font-size: 1rem;
+    }
+
+    .image-container img {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .text-description,
+    .text-sm {
+        font-size: 0.9rem !important;
+    }
+
+    .premio {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .premio-container {
+        gap: 0.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .premio-img img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .activate-button {
+        height: 1rem;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .number {
+        width: 2.5rem;
+        height: 3.5rem;
+        margin: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-button h2 {
+        font-size: 0.8rem;
+    }
+
+    .image-container img {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .text-description,
+    .text-sm {
+        font-size: 0.8rem !important;
+    }
+
+    .premio {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .premio-img img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .activate-button {
+        height: 0.8rem;
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .number {
+        width: 2rem;
+        height: 3rem;
+        margin: 2px;
+    }
 }
